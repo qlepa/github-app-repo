@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IRepos, IChoosedRepo, fetchRepos, setRepo } from '../actions';
+import { IRepos, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
 import { Box, Grid, Typography, Badge, Paper } from '@material-ui/core';
 import ChoosedRepo from './ChoosedRepo'

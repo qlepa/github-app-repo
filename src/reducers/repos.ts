@@ -1,4 +1,4 @@
-import { IRepos, Action, ActionTypes, IChoosedRepo } from '../actions';
+import { IRepos, Action, ActionTypes } from '../actions';
 
 interface IReducerState {
   repos: IRepos[],
