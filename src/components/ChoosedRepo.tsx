@@ -33,12 +33,19 @@ function ChoosedRepo(props: IProps) {
   // }, [props.repoId, props.repos])
   useEffect(() => {
     if (props.repos.length !== 0) {
-    const selectedRepo = props.repos.find((repo: IRepos) => {
-      return repo.id === props.choosedRepo
-    })
-    console.log('Kliknięte repo', selectedRepo)
-  }
-  })
+      const selectedRepo = props.repos.find((repo: IRepos) => {
+        return repo.id === props.choosedRepo
+      })
+      if (selectedRepo) {
+        setData({
+          name: selectedRepo.name,
+          description: selectedRepo.description,
+        })
+      }
+    } else {
+      console.log('nie ma')
+    }
+  }, [props.repos, props.choosedRepo])
 
   console.log('ChoosedRepo', props)
   return (
