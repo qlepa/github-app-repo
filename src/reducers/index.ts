@@ -1,7 +1,5 @@
 import { reposReducer } from './repos';
-import { issueReducer } from './issues';
 import { IRepos, IIssue } from '../actions';
-import { combineReducers } from 'redux';
 
 export interface IStoreState {
   repos: IRepos[];
@@ -11,8 +9,4 @@ export interface IStoreState {
   loadingIssue: string;
 }
 
-export const rootReducer = combineReducers({
-  reposReducer,
-  issueReducer,
-})
-export const reducers = rootReducer;
+export const reducers = reposReducer;

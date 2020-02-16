@@ -1,5 +1,4 @@
-import { IFetchReposAction, ISetRepo, ILoadingRepos } from './repos';
-import { ILoadingIssue, IFetchIssueAction } from './issue';
+import { IFetchReposAction, ISetRepo, ILoadingRepos, ILoadingIssue, IFetchIssueAction } from './repos';
 
 export enum ActionTypes {
   fetchRepos,
