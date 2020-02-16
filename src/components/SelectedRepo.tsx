@@ -7,7 +7,7 @@ import { IStoreState } from '../reducers';
 
 interface IProps {
   repos: IRepos[];
-  choosedRepo: number;
+  selectedRepo: number;
 }
 
 interface IRepo {
@@ -15,13 +15,13 @@ interface IRepo {
   description: string;
 }
 
-function ChoosedRepo(props: IProps) {
+function SelectedRepo(props: IProps) {
   const [repo, setData] = useState<IRepo>({ name: 'Choose repository', description: '' });
 
   useEffect(() => {
     if (props.repos.length !== 0) {
       const selectedRepo = props.repos.find((repo: IRepos) => {
-        return repo.id === props.choosedRepo
+        return repo.id === props.selectedRepo
       })
       if (selectedRepo) {
         setData({
@@ -30,9 +30,8 @@ function ChoosedRepo(props: IProps) {
         })
       }
     }
-  }, [props.repos, props.choosedRepo])
+  }, [props.repos, props.selectedRepo])
 
-  // console.log('ChoosedRepo', props)
   return (
     <Box>
       <Typography>{repo.name}</Typography>
@@ -41,12 +40,12 @@ function ChoosedRepo(props: IProps) {
   )
 }
 
-const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number } => {
-  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo }
+const mapStateToProps = (state: IStoreState): { repos: IRepos[], selectedRepo: number } => {
+  return { repos: state.reposReducer.repos, selectedRepo: state.reposReducer.selectedRepo }
 };
 
 export default compose(
   connect(
     mapStateToProps,
   )
-)(ChoosedRepo as FunctionComponent);
+)(SelectedRepo as FunctionComponent);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { IRepos, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
 import { Box, Grid, Typography, Badge, Paper } from '@material-ui/core';
-import ChoosedRepo from './ChoosedRepo'
+import SelectedRepo from './SelectedRepo'
 import Issues from './Issues'
 
 interface IProps {
@@ -14,20 +14,20 @@ interface IProps {
 }
 
 interface IState {
-  choosedRepo: number;
+  selectedRepo: number;
 }
 
 
 class _App extends React.Component<IProps, IState> {
   state = {
-    choosedRepo: 0,
+    selectedRepo: 0,
   }
   componentDidMount() {
     this.props.fetchRepos()
   };
 
-  chooseRepo = (choosedRepo: number ): void => {
-    this.props.setRepo(choosedRepo);
+  chooseRepo = (selectedRepo: number ): void => {
+    this.props.setRepo(selectedRepo);
   }
 
   renderReposList(): JSX.Element[] | JSX.Element {
@@ -59,11 +59,6 @@ class _App extends React.Component<IProps, IState> {
     }
   }
   render() {
-    console.log(this.props)
-    // const choosedRepoProps = {
-    //   repoId: this.state.choosedRepo,
-    // }
-
     return (
       <Box>
         <Grid container direction='column'>
@@ -72,8 +67,8 @@ class _App extends React.Component<IProps, IState> {
               <Typography variant='h1'>Welcome to Friday Issue Randomizer</Typography>
             </Grid>
             <Grid item md={6}>
-              <Typography variant='h2'>What is this?</Typography>
-              <Typography>alksndlkamsdlkamsdlkamsdlkasmdlkamsdlkasmd</Typography>
+              <Typography variant='h2'>How it works?</Typography>
+              <Typography>There is always a lot </Typography>
             </Grid>
           </Grid>
           <Grid container direction='column' alignItems='center' spacing={4}>
@@ -87,7 +82,7 @@ class _App extends React.Component<IProps, IState> {
           <Grid container>
             <Grid container justify='space-around'>
               <Grid item md={4}>
-                <ChoosedRepo />
+                <SelectedRepo />
               </Grid>
               <Grid item md={8}>
                 <Issues />

@@ -13,7 +13,7 @@ export interface IRepos {
   description: string;
 }
 
-export interface IChoosedRepo {
+export interface ISelectedRepo {
   id: number;
 }
 
@@ -69,11 +69,11 @@ export const fetchRepos = () => {
   };
 };
 
-export const setRepo = (choosedRepo: number) => {
+export const setRepo = (selectedRepo: number) => {
   return (dispatch: Dispatch) => {
     dispatch<ISetRepo>({
       type: ActionTypes.setRepo,
-      payload: choosedRepo,
+      payload: selectedRepo,
     })
   }
 };

@@ -9,7 +9,7 @@ interface IProps {
   repos: IRepos[];
   issue: IIssue;
   fetchIssue: Function;
-  choosedRepo: number;
+  selectedRepo: number;
   loadingIssue: string;
 }
 
@@ -17,7 +17,7 @@ function RandomIssue(props: IProps) {
   const fetchRandomIssue = (): void => {
     if (props.repos.length !== 0) {
       const selectedRepo = props.repos.find((repo: IRepos) => {
-            return repo.id === props.choosedRepo
+            return repo.id === props.selectedRepo
           }) 
           if (selectedRepo) {
             const issueNumber = Math.floor(Math.random()*selectedRepo.open_issues + 1)
@@ -47,8 +47,8 @@ function RandomIssue(props: IProps) {
     }
 }
 
-const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, issue: IIssue, loadingIssue: string } => {
-  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
+const mapStateToProps = (state: IStoreState): { repos: IRepos[], selectedRepo: number, issue: IIssue, loadingIssue: string } => {
+  return { repos: state.reposReducer.repos, selectedRepo: state.reposReducer.selectedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
 };
 
 export default connect(

@@ -7,7 +7,7 @@ import { IRepos } from '../actions';
 
 interface IProps {
   repos: IRepos[];
-  choosedRepo: number;
+  selectedRepo: number;
 }
 
 function NewIssue(props: IProps) {
@@ -22,7 +22,7 @@ function NewIssue(props: IProps) {
   const createIssue = function(): void {
     if (props.repos.length !== 0) {
       const selectedRepo = props.repos.find((repo: IRepos) => {
-          return repo.id === props.choosedRepo
+          return repo.id === props.selectedRepo
       }) 
       if (selectedRepo) {
         const url = `https://api.github.com/repos/qlepaplayground/${selectedRepo.name}/issues`
@@ -49,8 +49,8 @@ function NewIssue(props: IProps) {
   )
 }
 
-const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, } => {
-  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, }
+const mapStateToProps = (state: IStoreState): { repos: IRepos[], selectedRepo: number, } => {
+  return { repos: state.reposReducer.repos, selectedRepo: state.reposReducer.selectedRepo, }
 };
 
 export default connect(

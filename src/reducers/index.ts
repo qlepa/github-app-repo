@@ -6,7 +6,7 @@ import { combineReducers } from 'redux';
 export interface IStoreState {
   reposReducer: {
     repos: IRepos[];
-    choosedRepo: number;
+    selectedRepo: number;
     loadingRepos: string;
   }
   issueReducer: {

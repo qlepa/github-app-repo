@@ -2,13 +2,13 @@ import { IRepos, Action, ActionTypes } from '../actions';
 
 interface IReducerState {
   repos: IRepos[],
-  choosedRepo: number,
+  selectedRepo: number,
   loadingRepos: string;
 }
 
 const initialState: IReducerState = {
   repos: [],
-  choosedRepo: 0,
+  selectedRepo: 0,
   loadingRepos: 'loading',
 }
 
@@ -22,7 +22,7 @@ export const reposReducer = (state = initialState, action: Action) => {
       case ActionTypes.setRepo:
         return {
           ...state,
-          choosedRepo: action.payload,
+          selectedRepo: action.payload,
         };
       case ActionTypes.loadingRepos:
         return {

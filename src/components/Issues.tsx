@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { IStoreState } from '../reducers';
 
 interface IProps {
-  choosedRepo: number;
+  selectedRepo: number;
 }
 
 function Issues(props: IProps) {
@@ -27,7 +27,7 @@ function Issues(props: IProps) {
       return <NewIssue />
     case 'default':
     default:
-      const disabled = props.choosedRepo === 0 ? true : false
+      const disabled = props.selectedRepo === 0 ? true : false
       return(
       <Box>
         <Button disabled={disabled} onClick={randomIssue}>Random</Button>
@@ -37,8 +37,8 @@ function Issues(props: IProps) {
   }
 }
 
-const mapStateToProps = (state: IStoreState): { choosedRepo: number, } => {
-  return { choosedRepo: state.reposReducer.choosedRepo, }
+const mapStateToProps = (state: IStoreState): { selectedRepo: number, } => {
+  return { selectedRepo: state.reposReducer.selectedRepo, }
 };
 
 export default connect(
