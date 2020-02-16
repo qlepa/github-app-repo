@@ -27,16 +27,39 @@ export interface ISetRepo {
   payload: number;
 }
 
+export interface ILoadingRepos {
+  type: ActionTypes.loadingRepos;
+  payload: string;
+}
+
 const url = 'https://api.github.com/users/qlepaplayground/repos';
 
 export const fetchRepos = () => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<IRepos[]>(url);
+    try {
+      const response = await axios.get<IRepos[]>(url)
 
-    dispatch<IFetchReposAction>({
-      type: ActionTypes.fetchRepos,
-      payload: response.data
-    });
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'loading',
+      });
+
+      dispatch<IFetchReposAction>({
+        type: ActionTypes.fetchRepos,
+        payload: response.data
+      });
+
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'succes',
+      });
+    } catch (error) {
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'fail',
+      })
+      console.log(error)
+    }
   };
 };
 

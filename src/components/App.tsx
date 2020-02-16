@@ -14,12 +14,14 @@ interface IProps {
 
 interface IState {
   choosedRepo: number;
+  loading: boolean;
 }
 
 
 class _App extends React.Component<IProps, IState> {
   state = {
     choosedRepo: 0,
+    loading: true,
   }
   componentDidMount() {
     this.props.fetchRepos()
@@ -53,7 +55,7 @@ class _App extends React.Component<IProps, IState> {
     // const choosedRepoProps = {
     //   repoId: this.state.choosedRepo,
     // }
-
+    console.log(this.props)
     return (
       <Box>
         <Grid container direction='column'>

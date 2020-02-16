@@ -26,7 +26,7 @@ function Issues() {
       return(
       <Box>
         <Button onClick={randomIssue}>Random</Button>
-        <Button onClick={newIssue}>Add new</Button>
+        <Button disabled onClick={newIssue}>Add new</Button>
       </Box>
       )
   }
