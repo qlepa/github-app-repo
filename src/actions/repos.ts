@@ -27,16 +27,62 @@ export interface ISetRepo {
   payload: number;
 }
 
+interface ILabels {
+  name?: string;
+  color?: string;
+}
+
+export interface IIssue {
+  title: string;
+  user: {
+    login: string;
+  }
+  labels: ILabels[];
+}
+
+export interface IFetchIssueAction {
+  type: ActionTypes.fetchIssue;
+  payload: IIssue;
+}
+
+export interface ILoadingIssue {
+  type: ActionTypes.loadingIssue;
+  payload: string;
+}
+
+export interface ILoadingRepos {
+  type: ActionTypes.loadingRepos;
+  payload: string;
+}
+
 const url = 'https://api.github.com/users/qlepaplayground/repos';
 
 export const fetchRepos = () => {
   return async (dispatch: Dispatch) => {
-    const response = await axios.get<IRepos[]>(url);
+    try {
+      const response = await axios.get<IRepos[]>(url)
 
-    dispatch<IFetchReposAction>({
-      type: ActionTypes.fetchRepos,
-      payload: response.data
-    });
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'loading',
+      });
+
+      dispatch<IFetchReposAction>({
+        type: ActionTypes.fetchRepos,
+        payload: response.data
+      });
+
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'succes',
+      });
+    } catch (error) {
+      dispatch<ILoadingRepos>({
+        type: ActionTypes.loadingRepos,
+        payload: 'fail',
+      })
+      console.log(error)
+    }
   };
 };
 
@@ -47,6 +93,37 @@ export const setRepo = (choosedRepo: number) => {
       payload: choosedRepo,
     })
   }
+};
+
+export const fetchIssue = (repoName: string, issueNumber: number) => {
+  const url = `http://api.github.com/repos/qlepaplayground/${repoName}/issues/${issueNumber}`;
+  return async (dispatch: Dispatch) => {
+    try {
+      const response = await axios.get<IIssue>(url)
+      console.log(response)
+
+      dispatch<ILoadingIssue>({
+        type: ActionTypes.loadingIssue,
+        payload: 'loading',
+      });
+
+      dispatch<IFetchIssueAction>({
+        type: ActionTypes.fetchIssue,
+        payload: response.data
+      });
+
+      dispatch<ILoadingIssue>({
+        type: ActionTypes.loadingIssue,
+        payload: 'succes',
+      });
+    } catch (error) {
+      dispatch<ILoadingIssue>({
+        type: ActionTypes.loadingIssue,
+        payload: 'fail',
+      })
+      console.log(error)
+    }
+  };
 };
 
 

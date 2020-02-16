@@ -8,7 +8,7 @@ import NewIssue from './NewIssue';
 function Issues() {
   const [issueView, setData] = useState<string>('default')
   
-  const randomIssue = function(): void {
+  const randomIssue = (): void => {
     setData('random')
   }
 
@@ -26,7 +26,7 @@ function Issues() {
       return(
       <Box>
         <Button onClick={randomIssue}>Random</Button>
-        <Button onClick={newIssue}>Add new</Button>
+        <Button disabled onClick={newIssue}>Add new</Button>
       </Box>
       )
   }

@@ -10,6 +10,7 @@ interface IProps {
   repos: IRepos[];
   fetchRepos: Function;
   setRepo: Function;
+  loadingRepos: string;
 }
 
 interface IState {
@@ -50,6 +51,7 @@ class _App extends React.Component<IProps, IState> {
     })
   }
   render() {
+    console.log(this.props)
     // const choosedRepoProps = {
     //   repoId: this.state.choosedRepo,
     // }
@@ -71,7 +73,7 @@ class _App extends React.Component<IProps, IState> {
               <Typography variant='h3'>qlepaPlaygrounds repos</Typography>
             </Grid>
             <Grid item>
-              {this.renderReposList()}
+              {this.props.loadingRepos === 'loading' ? <Typography>LOADING</Typography> :this.renderReposList()}
             </Grid>
           </Grid>
           <Grid container>
@@ -90,8 +92,12 @@ class _App extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {
-  return { repos };
+// const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[], loadingRepos: string } => {
+//   return { repos, loadingRepos };
+// };
+
+const mapStateToProps = (state: IStoreState): { repos: IRepos[], loadingRepos: string } => {
+  return { repos: state.repos, loadingRepos: state.loadingRepos }
 };
 
 export const App = connect(
