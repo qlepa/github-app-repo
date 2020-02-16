@@ -1,17 +1,11 @@
 import React, { useState, FunctionComponent } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import compose from 'recompose/compose'
 import { Box, Button } from '@material-ui/core';
-import { IRepos } from '../actions';
-import { IStoreState } from '../reducers';
 import RandomIssue from './RandomIssue';
 import NewIssue from './NewIssue';
 
-interface IProps {
-  repos: IRepos[],
-}
-
-function Issues(props: IProps) {
+function Issues() {
   const [issueView, setData] = useState<string>('default')
   
   const randomIssue = function(): void {
@@ -38,12 +32,4 @@ function Issues(props: IProps) {
   }
 }
 
-const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {
-  return { repos };
-};
-
-export default compose(
-  connect(
-    mapStateToProps,
-  )
-)(Issues as FunctionComponent);
+export default compose()(Issues as FunctionComponent);

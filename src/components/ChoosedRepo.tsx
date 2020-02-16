@@ -32,7 +32,7 @@ function ChoosedRepo(props: IProps) {
     }
   }, [props.repos, props.choosedRepo])
 
-  console.log('ChoosedRepo', props)
+  // console.log('ChoosedRepo', props)
   return (
     <Box>
       <Typography>{repo.name}</Typography>
@@ -42,12 +42,11 @@ function ChoosedRepo(props: IProps) {
 }
 
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number } => {
-  console.log(state)
   return { repos: state.repos, choosedRepo: state.choosedRepo }
-  }
+};
 
 export default compose(
   connect(
     mapStateToProps,
   )
-)(ChoosedRepo as FunctionComponent)
+)(ChoosedRepo as FunctionComponent);
