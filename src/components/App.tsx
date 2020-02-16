@@ -30,13 +30,13 @@ class _App extends React.Component<IProps, IState> {
     this.props.setRepo(choosedRepo);
   }
 
-  renderReposList(): JSX.Element[] {
+  renderReposList(): JSX.Element[] | JSX.Element {
     const {
       repos,
       loadingRepos,
     } = this.props
-    // switch (loadingRepos) {
-    //   case 'succes':
+    switch (loadingRepos) {
+      case 'succes':
         return repos.map((repo: IRepos) => {
           return (
             <Badge 
@@ -51,12 +51,12 @@ class _App extends React.Component<IProps, IState> {
           </Badge>
           )
         })
-      // case 'fail':
-      //     default:
-      //   return (
-      //     <Box><Typography>FAIL</Typography></Box>
-      //   )
-    // }
+      case 'fail':
+        return <Box><Typography>FAIL</Typography></Box>
+      case 'loading':
+      default:
+        return <Box><Typography>LOADING</Typography></Box>
+    }
   }
   render() {
     console.log(this.props)

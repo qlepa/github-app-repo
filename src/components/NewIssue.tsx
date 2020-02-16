@@ -14,7 +14,7 @@ function NewIssue(props: IProps) {
     //   })
     //   if (selectedRepo) {
         // const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
-      const url = `http://api.github.com/repos/qlepaplayground/repo-1/issues`
+      const url = `https://api.github.com/repos/qlepaplayground/repo-1/issues`
       // const headers = {
       //   "Authorization" : `Token 673c0b9c7118c2be340781d8b719c50a2c6cc48b`
       // }
@@ -26,7 +26,7 @@ function NewIssue(props: IProps) {
         method: 'POST',
         url: url,
         headers: {
-          "Authorization" : `Token 673c0b9c7118c2be340781d8b719c50a2c6cc48b`,
+          "Authorization" : `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`,
           // 'Access-Control-Allow-Origin': '*',
           // 'Access-Control-Allow-Origin': 'http://localhost:3000/', 
         },

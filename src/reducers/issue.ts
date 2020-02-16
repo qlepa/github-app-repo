@@ -9,7 +9,7 @@ const initialState: IReducerState = {
   issue: {
     title: '',
     user: {
-      login: ''
+      login: 'init'
     },
     labels: [],
   },

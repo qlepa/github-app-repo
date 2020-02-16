@@ -20,21 +20,29 @@ function RandomIssue(props: IProps) {
             return repo.id === props.choosedRepo
           }) 
           if (selectedRepo) {
-            const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
+            const issueNumber = Math.floor(Math.random()*selectedRepo.open_issues + 1)
             props.fetchIssue(selectedRepo.name, issueNumber)
           }
       }
   } 
-
-  return(
-    <Box>
-      <Typography>Your Issue</Typography>
-      {/* <Typography>Title: {props.issue.title}</Typography> */}
-      {/* <Typography>Author: {issue.user.login}</Typography>
-      <Typography>Labels: {issue.labels.length > 0 ? issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography> */}
-      <Button onClick={randomIssue}>RANDOM YOUR ISSUE</Button>
-    </Box>
-  )
+  switch (props.loadingIssue) {
+    case 'succes':
+      return(
+        <Box>
+          <Typography>Your Issue</Typography>
+          <Typography>Title: {props.issue.title}</Typography>
+          {/* <Typography>Author: {issue.user.login}</Typography>
+          <Typography>Labels: {issue.labels.length > 0 ? issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography> */}
+        </Box>
+      )
+    case 'fail':
+      return <Box><Typography>FAIL</Typography></Box>
+    case 'loading':
+      return <Box><Typography>loading</Typography></Box>
+    case 'init':
+    default:
+      return <Box><Button onClick={randomIssue}>RANDOM YOUR ISSUE</Button></Box>
+    }
 }
 
 // const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {

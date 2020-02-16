@@ -30,16 +30,16 @@ const headers = {
 }
 
 export const fetchIssue = (repoName: string, issueNumber: number) => {
-  const url = `http://api.github.com/repos/qlepaplayground/${repoName}/issues/${issueNumber}`;
+  const url = `https://api.github.com/repos/qlepaplayground/${repoName}/issues/${issueNumber}`;
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get<IIssue>(url, {
-        headers: headers,
-      })
-
       dispatch<ILoadingIssue>({
         type: ActionTypes.loadingIssue,
         payload: 'loading',
+      });
+
+      const response = await axios.get<IIssue>(url, {
+        headers: headers,
       });
 
       dispatch<IFetchIssueAction>({
