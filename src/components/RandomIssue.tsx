@@ -14,7 +14,7 @@ interface IProps {
 }
 
 function RandomIssue(props: IProps) {
-  const randomIssue = (): void => {
+  const fetchRandomIssue = (): void => {
     if (props.repos.length !== 0) {
       const selectedRepo = props.repos.find((repo: IRepos) => {
             return repo.id === props.choosedRepo
@@ -22,6 +22,7 @@ function RandomIssue(props: IProps) {
           if (selectedRepo) {
             const issueNumber = Math.floor(Math.random()*selectedRepo.open_issues + 1)
             props.fetchIssue(selectedRepo.name, issueNumber)
+            console.log(selectedRepo.name)
           }
       }
   } 
@@ -31,8 +32,9 @@ function RandomIssue(props: IProps) {
         <Box>
           <Typography>Your Issue</Typography>
           <Typography>Title: {props.issue.title}</Typography>
-          {/* <Typography>Author: {issue.user.login}</Typography>
-          <Typography>Labels: {issue.labels.length > 0 ? issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography> */}
+          <Typography>Author: {props.issue.user.login}</Typography>
+          <Typography>Labels: {props.issue.labels.length > 0 ? props.issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography>
+          <Button onClick={fetchRandomIssue}>RANDOM YOUR ISSUE</Button>
         </Box>
       )
     case 'fail':
@@ -41,18 +43,9 @@ function RandomIssue(props: IProps) {
       return <Box><Typography>loading</Typography></Box>
     case 'init':
     default:
-      return <Box><Button onClick={randomIssue}>RANDOM YOUR ISSUE</Button></Box>
+      return <Box><Button onClick={fetchRandomIssue}>RANDOM YOUR ISSUE</Button></Box>
     }
 }
-
-// const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {
-//   return { repos };
-// };
-
-// export const App = connect(
-//   mapStateToProps,
-//   { fetchRepos, setRepo }
-// )(_App)
 
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, issue: IIssue, loadingIssue: string } => {
   return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
