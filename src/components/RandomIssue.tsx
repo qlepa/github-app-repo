@@ -1,5 +1,5 @@
  
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { connect } from 'react-redux';
 import { Box, Typography, Button } from '@material-ui/core';
 import { IRepos, IIssue, fetchIssue } from '../actions';
@@ -48,7 +48,7 @@ function RandomIssue(props: IProps) {
 // )(_App)
 
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, issue: IIssue, loadingIssue: string } => {
-  return { repos: state.repos, choosedRepo: state.choosedRepo, issue: state.issue, loadingIssue: state.loadingIssue }
+  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
 };
 
 export default connect(

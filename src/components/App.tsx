@@ -92,12 +92,8 @@ class _App extends React.Component<IProps, IState> {
   }
 }
 
-// const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[], loadingRepos: string } => {
-//   return { repos, loadingRepos };
-// };
-
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], loadingRepos: string } => {
-  return { repos: state.repos, loadingRepos: state.loadingRepos }
+  return { repos: state.reposReducer.repos, loadingRepos: state.reposReducer.loadingRepos }
 };
 
 export const App = connect(

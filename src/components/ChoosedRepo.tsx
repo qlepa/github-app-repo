@@ -42,7 +42,7 @@ function ChoosedRepo(props: IProps) {
 }
 
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number } => {
-  return { repos: state.repos, choosedRepo: state.choosedRepo }
+  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo }
 };
 
 export default compose(
