@@ -14,6 +14,8 @@ interface IProps {
 }
 
 function RandomIssue(props: IProps) {
+  // let disableButton = true 
+
   const fetchRandomIssue = (): void => {
     if (props.repos.length !== 0) {
       const selectedRepo = props.repos.find((repo: IRepos) => {
@@ -22,10 +24,11 @@ function RandomIssue(props: IProps) {
           if (selectedRepo) {
             const issueNumber = Math.floor(Math.random()*selectedRepo.open_issues + 1)
             props.fetchIssue(selectedRepo.name, issueNumber)
-            console.log(selectedRepo.name)
+            // disableButton = selectedRepo.open_issues > 0 ? false : true
           }
       }
-  } 
+    }
+  
   switch (props.loadingIssue) {
     case 'succes':
       return(
@@ -43,7 +46,7 @@ function RandomIssue(props: IProps) {
       return <Box><Typography>loading</Typography></Box>
     case 'init':
     default:
-      return <Box><Button onClick={fetchRandomIssue}>RANDOM YOUR ISSUE</Button></Box>
+      return <Box><Typography>Ready? ;)</Typography><Button onClick={fetchRandomIssue}>RANDOM YOUR ISSUE</Button></Box>
     }
 }
 

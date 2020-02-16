@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IRepos, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
-import { Box, Grid, Typography, Badge, Paper } from '@material-ui/core';
+import { Box, Grid, Typography, Badge, Paper, CircularProgress } from '@material-ui/core';
 import SelectedRepo from './SelectedRepo'
 import Issues from './Issues'
 
@@ -39,23 +39,25 @@ class _App extends React.Component<IProps, IState> {
       case 'succes':
         return repos.map((repo: IRepos) => {
           return (
-            <Badge 
-              badgeContent={`Issues ${repo.open_issues}`}
-              color='primary'
-              onClick={() => this.chooseRepo(repo.id)} key={repo.id}
-            >
-              <Paper elevation={3}>
-                <Typography>{repo.name}</Typography>
-                <Typography>{repo.description}</Typography>
-              </Paper>
-          </Badge>
+            <Grid item key={repo.id}>
+              <Badge 
+                badgeContent={`Issues ${repo.open_issues}`}
+                color='primary'
+                onClick={() => this.chooseRepo(repo.id)}
+              >
+                <Paper elevation={3} style={{cursor: 'pointer', margin: "10px", padding: "5px", overflow: "hidden", textOverflow: "ellipsis", width: '200px', height: '100px'}}>
+                  <Typography variant="h6">{repo.name}</Typography>
+                  <Typography noWrap>{repo.description}</Typography>
+                </Paper>
+            </Badge>
+          </Grid>
           )
         })
       case 'fail':
-        return <Box><Typography>FAIL</Typography></Box>
+        return <Box><Typography variant='h5'>FAIL :( Unable to fetch repos. Try again</Typography></Box>
       case 'loading':
       default:
-        return <Box><Typography>LOADING</Typography></Box>
+        return <CircularProgress disableShrink />
     }
   }
   render() {
@@ -67,8 +69,13 @@ class _App extends React.Component<IProps, IState> {
               <Typography variant='h1'>Welcome to Friday Issue Randomizer</Typography>
             </Grid>
             <Grid item md={6}>
-              <Typography variant='h2'>How it works?</Typography>
-              <Typography>There is always a lot </Typography>
+              <Typography variant='h3' style={{marginTop: '20px'}}>How it works?</Typography>
+              <Typography>
+                There is always a lot small tasks TODO in our repos. Let's make friday a "Random Issue Day". 
+                Everyone can random a issue to do depends of selected repo.
+              </Typography>
+              <Typography>1. Select repo</Typography>
+              <Typography>2. Random issue or add new one</Typography>
             </Grid>
           </Grid>
           <Grid container direction='column' alignItems='center' spacing={4}>
@@ -76,15 +83,17 @@ class _App extends React.Component<IProps, IState> {
               <Typography variant='h3'>qlepaPlaygrounds repos</Typography>
             </Grid>
             <Grid item>
-              {this.props.loadingRepos === 'loading' ? <Typography>LOADING</Typography> :this.renderReposList()}
+              <Grid container>
+                {this.renderReposList()}
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container>
-            <Grid container justify='space-around'>
-              <Grid item md={4}>
+          <Grid item>
+            <Grid container alignItems='center' justify='space-around'>
+              <Grid item md={6}>
                 <SelectedRepo />
               </Grid>
-              <Grid item md={8}>
+              <Grid item>
                 <Issues />
               </Grid>
             </Grid>
@@ -100,6 +109,6 @@ const mapStateToProps = (state: IStoreState): { repos: IRepos[], loadingRepos: s
 };
 
 export const App = connect(
-  mapStateToProps,
+  mapStateToProps, 
   { fetchRepos, setRepo }
 )(_App)
