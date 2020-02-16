@@ -21,11 +21,10 @@ function RandomIssue(props: IProps) {
           }) 
           if (selectedRepo) {
             const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
-            console.log('repo name i issue number', selectedRepo.name, issueNumber)
             props.fetchIssue(selectedRepo.name, issueNumber)
           }
       }
-  }
+  } 
 
   return(
     <Box>

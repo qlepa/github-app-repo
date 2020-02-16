@@ -32,23 +32,31 @@ class _App extends React.Component<IProps, IState> {
 
   renderReposList(): JSX.Element[] {
     const {
-      repos
+      repos,
+      loadingRepos,
     } = this.props
-
-    return repos.map((repo: IRepos) => {
-      return (
-        <Badge 
-          badgeContent={`Issues ${repo.open_issues}`}
-          color='primary'
-          onClick={() => this.chooseRepo(repo.id)} key={repo.id}
-        >
-          <Paper elevation={3}>
-            <Typography>{repo.name}</Typography>
-            <Typography>{repo.description}</Typography>
-          </Paper>
-      </Badge>
-      )
-    })
+    // switch (loadingRepos) {
+    //   case 'succes':
+        return repos.map((repo: IRepos) => {
+          return (
+            <Badge 
+              badgeContent={`Issues ${repo.open_issues}`}
+              color='primary'
+              onClick={() => this.chooseRepo(repo.id)} key={repo.id}
+            >
+              <Paper elevation={3}>
+                <Typography>{repo.name}</Typography>
+                <Typography>{repo.description}</Typography>
+              </Paper>
+          </Badge>
+          )
+        })
+      // case 'fail':
+      //     default:
+      //   return (
+      //     <Box><Typography>FAIL</Typography></Box>
+      //   )
+    // }
   }
   render() {
     console.log(this.props)
