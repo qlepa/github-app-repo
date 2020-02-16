@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IRepos, fetchRepos, setRepo } from '../actions';
+import { IRepos, IIssue, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
 import { Box, Grid, Typography, Badge, Paper } from '@material-ui/core';
 import ChoosedRepo from './ChoosedRepo'
@@ -92,8 +92,12 @@ class _App extends React.Component<IProps, IState> {
   }
 }
 
-const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {
-  return { repos };
+// const mapStateToProps = ({ repos }: IStoreState): { repos: IRepos[] } => {
+//   return { repos };
+// };
+
+const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, issue: IIssue, loadingIssue: string } => {
+  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
 };
 
 export const App = connect(

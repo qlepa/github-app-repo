@@ -70,7 +70,7 @@ function RandomIssue(props: IProps) {
 // )(_App)
 
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], choosedRepo: number, issue: IIssue, loadingIssue: string } => {
-  return { repos: state.repos, choosedRepo: state.choosedRepo, issue: state.issue, loadingIssue: state.loadingIssue }
+  return { repos: state.reposReducer.repos, choosedRepo: state.reposReducer.choosedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
 };
 
 export default connect(
