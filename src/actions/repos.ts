@@ -55,12 +55,18 @@ export interface ILoadingRepos {
   payload: string;
 }
 
-const url = 'https://api.github.com/users/qlepaplayground/repos';
+const headers = {
+  "Authorization" : `OAuth f03dc974f5f3ee3285d517428cff2a039deb02ba`
+}
 
 export const fetchRepos = () => {
+  const url = 'https://api.github.com/users/qlepaplayground/repos';
+  
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get<IRepos[]>(url)
+      const response = await axios.get<IRepos[]>(url, {
+        headers: headers
+      })
 
       dispatch<ILoadingRepos>({
         type: ActionTypes.loadingRepos,
@@ -99,7 +105,11 @@ export const fetchIssue = (repoName: string, issueNumber: number) => {
   const url = `http://api.github.com/repos/qlepaplayground/${repoName}/issues/${issueNumber}`;
   return async (dispatch: Dispatch) => {
     try {
-      const response = await axios.get<IIssue>(url)
+      const response = await axios.get<IIssue>(url, 
+        {
+        headers: headers,
+      }
+      )
       console.log(response)
 
       dispatch<ILoadingIssue>({

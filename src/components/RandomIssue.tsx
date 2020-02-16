@@ -26,28 +26,9 @@ function RandomIssue(props: IProps) {
           props.fetchIssue(selectedRepo.name, issueNumber)
         }
     }
+  console.log('issues', props)
   }, [props])
 
-// if (props.repos.length !== 0) {
-    //   const selectedRepo = props.repos.find((repo: IRepos) => {
-    //     return repo.id === props.choosedRepo
-    //   })
-    //   if (selectedRepo) {
-    //     const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
-    //     const url = `http://api.github.com/repos/qlepaplayground/${selectedRepo.name}/issues/${issueNumber}`
-    
-    //   axios.get(url)
-    //     .then(res => {
-    //       console.log(res.data)
-    //       setData(res.data)
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    //   }
-    // }
-
-    console.log('random issue', props)
   return(
     <Box>
       <Typography>Your Issue</Typography>
