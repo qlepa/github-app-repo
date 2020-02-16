@@ -14,20 +14,18 @@ interface IProps {
 }
 
 function RandomIssue(props: IProps) {
-
-  useEffect(() => {
+  const randomIssue = (): void => {
     if (props.repos.length !== 0) {
-    const selectedRepo = props.repos.find((repo: IRepos) => {
-          return repo.id === props.choosedRepo
-        }) 
-        if (selectedRepo) {
-          const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
-          console.log('repo name i issue number', selectedRepo.name, issueNumber)
-          props.fetchIssue(selectedRepo.name, issueNumber)
-        }
-    }
-  console.log('issues', props)
-  }, [props])
+      const selectedRepo = props.repos.find((repo: IRepos) => {
+            return repo.id === props.choosedRepo
+          }) 
+          if (selectedRepo) {
+            const issueNumber = Math.round(Math.random()*selectedRepo.open_issues)
+            console.log('repo name i issue number', selectedRepo.name, issueNumber)
+            props.fetchIssue(selectedRepo.name, issueNumber)
+          }
+      }
+  }
 
   return(
     <Box>
@@ -35,7 +33,7 @@ function RandomIssue(props: IProps) {
       {/* <Typography>Title: {props.issue.title}</Typography> */}
       {/* <Typography>Author: {issue.user.login}</Typography>
       <Typography>Labels: {issue.labels.length > 0 ? issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography> */}
-      <Button>Back</Button>
+      <Button onClick={randomIssue}>RANDOM YOUR ISSUE</Button>
     </Box>
   )
 }
