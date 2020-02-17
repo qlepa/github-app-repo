@@ -24,6 +24,7 @@ const useStyles = makeStyles(() => ({
 
 function NewIssue(props: IProps) {
   const [issueTitle, setInputValues] = useState('');
+  const [sentStatus, setStatus] = useState(false)
   const repos = useSelector(selectRepos);
   const selectedRepo = useSelector(selectSelectedRepo);
 
@@ -51,14 +52,19 @@ function NewIssue(props: IProps) {
           })
       if (userRepo) {
         const url = `https://api.github.com/repos/qlepaplayground/${userRepo.name}/issues`
-        axios({
-          method: 'POST',
-          url: url,
-          headers: headers,
-          data: {
-            title: issueTitle,
-          } 
-        })
+        try {
+          axios({
+            method: 'POST',
+            url: url,
+            headers: headers,
+            data: {
+              title: issueTitle,
+            } 
+          })
+          setStatus(true)
+        } catch (error) {
+          console.log(error)
+        }
       }
     }
 
@@ -66,11 +72,13 @@ function NewIssue(props: IProps) {
   return(
     <Box>
       <Grid container direction='column' alignItems='center'>
-        <Grid item>
-          <Typography>Add new issue</Typography>
-          <Input onChange={handleOnChange} />
-          <Button onClick={createIssue}>SEND</Button>
-        </Grid>
+        {sentStatus 
+          ? <Typography>Issue sent</Typography> 
+          : <Grid item>
+              <Typography>Add new issue</Typography>
+              <Input onChange={handleOnChange} />
+              <Button onClick={createIssue}>SEND</Button>
+            </Grid>}
         <Grid item>
           <Button className={btnNewGoBackClass} onClick={handleGoBack}>Go back</Button>
         </Grid>
