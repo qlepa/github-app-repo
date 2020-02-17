@@ -15,16 +15,13 @@ const useStyles = makeStyles(() => ({
   title: {
     fontSize: '1.5rem',
   },
-  wrapper: {
-    height: '210px',
-  }
 }))
 
 const selectRepos = (state: IStoreState) => state.reposReducer.repos;
 const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
 
 function SelectedRepo(props: IProps) {
-  const [repo, setData] = useState<IRepo>({ name: 'Choose repository', description: '' });
+  const [repo, setRepo] = useState<IRepo>({ name: 'Choose repository', description: '' });
   const repos = useSelector(selectRepos);
   const selectedRepo = useSelector(selectSelectedRepo);
 
@@ -34,7 +31,7 @@ function SelectedRepo(props: IProps) {
         return repo.id === selectedRepo
       })
       if (userRepo) {
-        setData({
+        setRepo({
           name: userRepo.name,
           description: userRepo.description,
         })
@@ -44,11 +41,10 @@ function SelectedRepo(props: IProps) {
 
   const {
     title: titleClass,
-    wrapper: wrapperClass,
   } = useStyles(props)
 
   return (
-    <Box className={wrapperClass}>
+    <Box>
       <Typography className={titleClass}>{repo.name}</Typography>
       <Typography>{repo.description}</Typography>
     </Box>

@@ -84,10 +84,7 @@ class _App extends React.Component<IProps, IState, WithStyles> {
               <Typography className={classes.detailsContent}>2. Random issue or add new one</Typography>
             </Grid>
           </Grid>
-          <Grid container direction='column' alignItems='center' spacing={4}>
-            <Grid item>
-              <Typography variant='h3'>qlepaPlaygrounds repos</Typography>
-            </Grid>
+          <Grid className={classes.reposList} container direction='column' alignItems='center' spacing={4}>
             <Grid item>
               <Grid container>
                 {this.renderReposList()}
@@ -95,11 +92,11 @@ class _App extends React.Component<IProps, IState, WithStyles> {
             </Grid>
           </Grid>
           <Grid item>
-            <Grid container alignItems='center' justify='space-around'>
+            <Grid className={classes.issueWrapper} container alignItems='center' justify='space-around'>
               <Grid item md={6}>
                 <SelectedRepo />
               </Grid>
-              <Grid item>
+              <Grid className={classes.issueDetailsWrapper} item>
                 <Issues />
               </Grid>
             </Grid>
@@ -129,6 +126,16 @@ const styles = () => createStyles({
     textOverflow: "ellipsis", 
     width: '200px', 
     height: '100px'
+  },
+  reposList: {
+    marginTop: '10px',
+    marginBottom: '10px',
+  },
+  issueWrapper: {
+    height: '250px'
+  },
+  issueDetailsWrapper: {
+    minWidth: '250px',
   },
   error: {
     color: 'red',

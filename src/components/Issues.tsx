@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 function Issues(props: IProps) {
-  const [issueView, setData] = useState<string>('default');
+  const [issueView, setView] = useState<string>('default');
   const repos = useSelector(selectRepos)
   const selectedRepo = useSelector(selectSelectedRepo);
   const dispatch = useDispatch()
@@ -37,15 +37,15 @@ function Issues(props: IProps) {
         dispatch(fetchIssue(userRepo.name, issueNumber))
       }
     }
-    setData('random')
+    setView('random')
   }
 
   const setIssueView = (view: string): void => {
-    setData(view)
+    setView(view)
   }
 
   const newIssue = function(): void {
-    setData('new')
+    setView('new')
   }
 
   const {
@@ -64,7 +64,7 @@ function Issues(props: IProps) {
       return <NewIssue {...IssueProps} />
     case 'default':
     default:
-      const disabled = selectedRepo === 0 ? true : false
+      const disabled = selectedRepo === 0
       
       return(
       <Box>

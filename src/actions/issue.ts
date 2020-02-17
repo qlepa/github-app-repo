@@ -3,6 +3,7 @@ import { AnyAction } from 'redux';
 import { ActionTypes } from './types';
 import { ThunkAction } from 'redux-thunk';
 import { IStoreState } from '../reducers';
+import { headers } from '../constans';
 
 interface ILabels {
   name?: string;
@@ -25,10 +26,6 @@ export interface IFetchIssueAction {
 export interface ILoadingIssue {
   type: ActionTypes.loadingIssue;
   payload: string;
-}
-
-const headers = {
-  "Authorization": `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`
 }
 
 export const fetchIssue = (repoName: string, issueNumber: number): ThunkAction<void, IStoreState, any, AnyAction> => {

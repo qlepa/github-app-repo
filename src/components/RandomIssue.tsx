@@ -1,7 +1,7 @@
 
 import React, { FunctionComponent, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import { Box, Typography, Button, makeStyles, Paper } from '@material-ui/core';
+import { Box, Typography, Button, makeStyles, Paper, CircularProgress } from '@material-ui/core';
 import { IStoreState } from '../reducers';
 
 const selectIssue = (state: IStoreState) => state.issueReducer.issue;
@@ -15,6 +15,9 @@ const useStyles = makeStyles(() => ({
   btnRandomGoBack: {
     fontSize: '1.5rem',
     backgroundColor: '#add2ff',
+  },
+  issueItems: {
+    textAlign: 'center',
   },
   issueDetails: {
     margin: '10px',
@@ -39,13 +42,14 @@ function RandomIssue(props: IProps) {
   const {
     btnRandomGoBack: btnRandomGoBackClass,
     issueDetails: issueDetailsClass,
+    issueItems: issueItemsClass,
     error: errorClass,
   } = useStyles(props)
 
   switch (loadingIssue) {
     case 'succes':
       return (
-        <Box>
+        <Box className={issueItemsClass}>
           <Paper className={issueDetailsClass}>
             <Typography>Your Issue</Typography>
             <Typography>Title: {issue.title}</Typography>
@@ -56,10 +60,13 @@ function RandomIssue(props: IProps) {
         </Box>
       )
     case 'fail':
-      return <Box><Typography className={errorClass}>FAIL</Typography></Box>
+      return <Box>
+          <Typography className={errorClass}>FAIL, go back and try again or add new issue.</Typography>
+          <Button className={btnRandomGoBackClass} onClick={handleGoBack}>Go back</Button>
+        </Box>
     case 'loading':
     default:
-      return <Box><Typography>loading</Typography></Box>
+      return <CircularProgress disableShrink />
   }
 }
 
