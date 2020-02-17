@@ -2,10 +2,12 @@ import React, { useState, FunctionComponent } from 'react';
 import { Box, Button, makeStyles } from '@material-ui/core';
 import RandomIssue from './RandomIssue';
 import NewIssue from './NewIssue';
-import { useSelector } from 'react-redux';
+import { IRepos, fetchIssue } from '../actions';
+import { useSelector, useDispatch } from 'react-redux';
 import { IStoreState } from '../reducers';
 
 const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
+const selectRepos = (state: IStoreState) => state.reposReducer.repos;
 
 type IProps = {}
 
@@ -20,10 +22,26 @@ const useStyles = makeStyles(() => ({
 
 function Issues(props: IProps) {
   const [issueView, setData] = useState<string>('default');
+  const repos = useSelector(selectRepos)
   const selectedRepo = useSelector(selectSelectedRepo);
+  const dispatch = useDispatch()
+
   
   const randomIssue = (): void => {
+    if (repos.length !== 0) {
+      const userRepo = repos.find((repo: IRepos) => {
+        return repo.id === selectedRepo
+      })
+      if (userRepo) {
+        const issueNumber = Math.floor(Math.random() * userRepo.open_issues + 1)
+        dispatch(fetchIssue(userRepo.name, issueNumber))
+      }
+    }
     setData('random')
+  }
+
+  const setIssueView = (view: string): void => {
+    setData(view)
   }
 
   const newIssue = function(): void {
@@ -35,11 +53,15 @@ function Issues(props: IProps) {
     btnNewIssue: btnNewIssueClass,
   } = useStyles(props)
 
+  const IssueProps: any = {
+    goBack: setIssueView
+  }
+
   switch(issueView) {
     case 'random':
-      return <RandomIssue />
+      return <RandomIssue {...IssueProps} />
     case 'new':
-      return <NewIssue />
+      return <NewIssue {...IssueProps} />
     case 'default':
     default:
       const disabled = selectedRepo === 0 ? true : false

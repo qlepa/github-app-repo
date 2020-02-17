@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 import axios from 'axios';
-import { Box, Typography, Button, Input } from '@material-ui/core';
+import { Box, Typography, Button, Input, makeStyles } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { IStoreState } from '../reducers';
 import { IRepos } from '../actions';
@@ -8,7 +8,19 @@ import { IRepos } from '../actions';
 const selectRepos = (state: IStoreState) => state.reposReducer.repos;
 const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
 
-function NewIssue() {
+type IProps = Readonly<{
+  goBack: (view: string) => void;
+}>
+
+const useStyles = makeStyles(() => ({
+  btnNewGoBack: {
+    fontSize: '1.5rem',
+    backgroundColor: '#add2ff',
+  },
+  
+}))
+
+function NewIssue(props: IProps) {
   const [issueTitle, setInputValues] = useState('');
   const repos = useSelector(selectRepos);
   const selectedRepo = useSelector(selectSelectedRepo);
@@ -18,6 +30,17 @@ function NewIssue() {
 
     setInputValues(value);
   }, []);
+
+  const handleGoBack = useCallback(
+    () => {
+      props.goBack?.('default')
+    }, [props.goBack]
+  )
+
+  const {
+    btnNewGoBack: btnNewGoBackClass,
+    
+  } = useStyles(props)
 
   const createIssue = function(): void {
     if (repos.length !== 0) {
@@ -44,7 +67,8 @@ function NewIssue() {
     <Box>
       <Typography>Add new issue</Typography>
       <Input onChange={handleOnChange} />
-      <Button onClick={createIssue}>NEW</Button>
+      <Button onClick={createIssue}>SEND</Button>
+      <Button className={btnNewGoBackClass} onClick={handleGoBack}>Go back</Button>
     </Box>
   )
 }

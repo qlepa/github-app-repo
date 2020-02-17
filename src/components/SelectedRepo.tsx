@@ -15,6 +15,9 @@ const useStyles = makeStyles(() => ({
   title: {
     fontSize: '1.5rem',
   },
+  wrapper: {
+    height: '210px',
+  }
 }))
 
 const selectRepos = (state: IStoreState) => state.reposReducer.repos;
@@ -41,10 +44,11 @@ function SelectedRepo(props: IProps) {
 
   const {
     title: titleClass,
+    wrapper: wrapperClass,
   } = useStyles(props)
 
   return (
-    <Box>
+    <Box className={wrapperClass}>
       <Typography className={titleClass}>{repo.name}</Typography>
       <Typography>{repo.description}</Typography>
     </Box>
