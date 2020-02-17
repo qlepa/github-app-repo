@@ -1,17 +1,26 @@
 import React, { useState, FunctionComponent } from 'react';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, makeStyles } from '@material-ui/core';
 import RandomIssue from './RandomIssue';
 import NewIssue from './NewIssue';
 import { useSelector } from 'react-redux';
 import { IStoreState } from '../reducers';
 
-interface IProps {
-  selectedRepo: number;
-}
+const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
+
+type IProps = {}
+
+const useStyles = makeStyles(() => ({
+  btnRandom: {
+    fontSize: '1.5rem',
+  },
+  btnNewIssue: {
+    fontSize: '1.5rem',
+  },
+}))
 
 function Issues(props: IProps) {
-  const [issueView, setData] = useState<string>('default')
-  const selectedRepo = useSelector((state: IStoreState) => state.reposReducer.selectedRepo)
+  const [issueView, setData] = useState<string>('default');
+  const selectedRepo = useSelector(selectSelectedRepo);
   
   const randomIssue = (): void => {
     setData('random')
@@ -21,6 +30,11 @@ function Issues(props: IProps) {
     setData('new')
   }
 
+  const {
+    btnRandom: btnRandomClass,
+    btnNewIssue: btnNewIssueClass,
+  } = useStyles(props)
+
   switch(issueView) {
     case 'random':
       return <RandomIssue />
@@ -29,11 +43,11 @@ function Issues(props: IProps) {
     case 'default':
     default:
       const disabled = selectedRepo === 0 ? true : false
-
+      
       return(
       <Box>
-        <Button disabled={disabled} onClick={randomIssue}>Random</Button>
-        <Button disabled={disabled} onClick={newIssue}>Add new</Button>
+        <Button className={btnRandomClass} disabled={disabled} onClick={randomIssue}>Random</Button>
+        <Button className={btnNewIssueClass} disabled={disabled} onClick={newIssue}>Add new</Button>
       </Box>
       )
   }

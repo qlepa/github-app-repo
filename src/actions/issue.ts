@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Dispatch, AnyAction } from 'redux';
+import { AnyAction } from 'redux';
 import { ActionTypes } from './types';
 import { ThunkAction } from 'redux-thunk';
 import { IStoreState } from '../reducers';
@@ -28,7 +28,7 @@ export interface ILoadingIssue {
 }
 
 const headers = {
-  "Authorization" : `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`
+  "Authorization": `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`
 }
 
 export const fetchIssue = (repoName: string, issueNumber: number): ThunkAction<void, IStoreState, any, AnyAction> => {

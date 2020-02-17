@@ -1,6 +1,8 @@
 import axios from 'axios';
-import { Dispatch } from 'redux';
+import { AnyAction } from 'redux';
 import { ActionTypes } from './types';
+import { IStoreState } from '../reducers';
+import { ThunkAction } from 'redux-thunk';
 
 export interface IRepos {
   id: number;
@@ -33,13 +35,13 @@ export interface ILoadingRepos {
 }
 
 const headers = {
-  "Authorization" : `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`
+  "Authorization": `Token 43a52db76bc30c22fbfe93c96bb15c1e161cc678`
 }
 
-export const fetchRepos = () => {
+export const fetchRepos = (): ThunkAction<void, IStoreState, any, AnyAction> => {
   const url = 'https://api.github.com/users/qlepaplayground/repos';
-  // const url = 'https://api.github.com/rate_limit'
-  return async (dispatch: Dispatch) => {
+
+  return async (dispatch) => {
     try {
       const response = await axios.get<IRepos[]>(url, {
         headers: headers
@@ -69,8 +71,8 @@ export const fetchRepos = () => {
   };
 };
 
-export const setRepo = (selectedRepo: number) => {
-  return (dispatch: Dispatch) => {
+export const setRepo = (selectedRepo: number): ThunkAction<void, IStoreState, any, AnyAction> => {
+  return (dispatch) => {
     dispatch<ISetRepo>({
       type: ActionTypes.setRepo,
       payload: selectedRepo,

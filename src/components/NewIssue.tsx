@@ -1,17 +1,17 @@
 import React, { FunctionComponent, useState, useCallback } from 'react';
 import axios from 'axios';
 import { Box, Typography, Button, Input } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IStoreState } from '../reducers';
 import { IRepos } from '../actions';
 
-interface IProps {
-  repos: IRepos[];
-  selectedRepo: number;
-}
+const selectRepos = (state: IStoreState) => state.reposReducer.repos;
+const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
 
-function NewIssue(props: IProps) {
+function NewIssue() {
   const [issueTitle, setInputValues] = useState('');
+  const repos = useSelector(selectRepos);
+  const selectedRepo = useSelector(selectSelectedRepo);
 
   const handleOnChange = useCallback(event => {
     const { value } = event.target;
@@ -20,12 +20,12 @@ function NewIssue(props: IProps) {
   }, []);
 
   const createIssue = function(): void {
-    if (props.repos.length !== 0) {
-      const selectedRepo = props.repos.find((repo: IRepos) => {
-          return repo.id === props.selectedRepo
-      }) 
-      if (selectedRepo) {
-        const url = `https://api.github.com/repos/qlepaplayground/${selectedRepo.name}/issues`
+    if (repos.length !== 0) {
+      const userRepo = repos.find((repo: IRepos) => {
+            return repo.id === selectedRepo
+          })
+      if (userRepo) {
+        const url = `https://api.github.com/repos/qlepaplayground/${userRepo.name}/issues`
         axios({
           method: 'POST',
           url: url,
@@ -49,10 +49,4 @@ function NewIssue(props: IProps) {
   )
 }
 
-const mapStateToProps = (state: IStoreState): { repos: IRepos[], selectedRepo: number, } => {
-  return { repos: state.reposReducer.repos, selectedRepo: state.reposReducer.selectedRepo, }
-};
-
-export default connect(
-    mapStateToProps,
-  )(NewIssue as FunctionComponent);
+export default NewIssue as FunctionComponent;
