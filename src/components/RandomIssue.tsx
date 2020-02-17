@@ -1,6 +1,6 @@
  
 import React, { FunctionComponent } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography, Button } from '@material-ui/core';
 import { IRepos, IIssue, fetchIssue } from '../actions';
 import { IStoreState } from '../reducers';
@@ -12,31 +12,41 @@ interface IProps {
   selectedRepo: number;
   loadingIssue: string;
 }
+const selectRepos = (state: IStoreState) => state.reposReducer.repos;
+const selectIssue = (state: IStoreState) => state.issueReducer.issue
+const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo
+const selectLoadingIssue = (state: IStoreState) => state.issueReducer.loadingIssue
 
 function RandomIssue(props: IProps) {
+  const repos = useSelector(selectRepos)
+  const issue = useSelector(selectIssue)
+  const selectedRepo = useSelector(selectSelectedRepo)
+  const loadingIssue = useSelector(selectLoadingIssue)
+  const dispatch = useDispatch()
   // let disableButton = true 
 
+
   const fetchRandomIssue = (): void => {
-    if (props.repos.length !== 0) {
-      const selectedRepo = props.repos.find((repo: IRepos) => {
-            return repo.id === props.selectedRepo
+    if (repos.length !== 0) {
+      const userRepo = repos.find((repo: IRepos) => {
+            return repo.id === selectedRepo
           }) 
-          if (selectedRepo) {
-            const issueNumber = Math.floor(Math.random()*selectedRepo.open_issues + 1)
-            props.fetchIssue(selectedRepo.name, issueNumber)
-            // disableButton = selectedRepo.open_issues > 0 ? false : true
+          if (userRepo) {
+            const issueNumber = Math.floor(Math.random()*userRepo.open_issues + 1)
+            dispatch(fetchIssue(userRepo.name, issueNumber))
+            // disableButton = userRepo.open_issues > 0 ? false : true
           }
       }
     }
   
-  switch (props.loadingIssue) {
+  switch (loadingIssue) {
     case 'succes':
       return(
         <Box>
           <Typography>Your Issue</Typography>
-          <Typography>Title: {props.issue.title}</Typography>
-          <Typography>Author: {props.issue.user.login}</Typography>
-          <Typography>Labels: {props.issue.labels.length > 0 ? props.issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography>
+          <Typography>Title: {issue.title}</Typography>
+          <Typography>Author: {issue.user.login}</Typography>
+          <Typography>Labels: {issue.labels.length > 0 ? issue.labels.map((label) => {return label.name}) : 'No labels'}</Typography>
           <Button onClick={fetchRandomIssue}>RANDOM YOUR ISSUE</Button>
         </Box>
       )
@@ -50,11 +60,4 @@ function RandomIssue(props: IProps) {
     }
 }
 
-const mapStateToProps = (state: IStoreState): { repos: IRepos[], selectedRepo: number, issue: IIssue, loadingIssue: string } => {
-  return { repos: state.reposReducer.repos, selectedRepo: state.reposReducer.selectedRepo, issue: state.issueReducer.issue, loadingIssue: state.issueReducer.loadingIssue }
-};
-
-export default connect(
-    mapStateToProps,
-    { fetchIssue }
-  )(RandomIssue as FunctionComponent);
+export default RandomIssue as FunctionComponent;

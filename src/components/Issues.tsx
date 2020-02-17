@@ -2,7 +2,7 @@ import React, { useState, FunctionComponent } from 'react';
 import { Box, Button } from '@material-ui/core';
 import RandomIssue from './RandomIssue';
 import NewIssue from './NewIssue';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { IStoreState } from '../reducers';
 
 interface IProps {
@@ -11,6 +11,7 @@ interface IProps {
 
 function Issues(props: IProps) {
   const [issueView, setData] = useState<string>('default')
+  const selectedRepo = useSelector((state: IStoreState) => state.reposReducer.selectedRepo)
   
   const randomIssue = (): void => {
     setData('random')
@@ -27,7 +28,8 @@ function Issues(props: IProps) {
       return <NewIssue />
     case 'default':
     default:
-      const disabled = props.selectedRepo === 0 ? true : false
+      const disabled = selectedRepo === 0 ? true : false
+
       return(
       <Box>
         <Button disabled={disabled} onClick={randomIssue}>Random</Button>
@@ -37,10 +39,4 @@ function Issues(props: IProps) {
   }
 }
 
-const mapStateToProps = (state: IStoreState): { selectedRepo: number, } => {
-  return { selectedRepo: state.reposReducer.selectedRepo, }
-};
-
-export default connect(
-    mapStateToProps,
-  )(Issues as FunctionComponent);
+export default Issues as FunctionComponent;

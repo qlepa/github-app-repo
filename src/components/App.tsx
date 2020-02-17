@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IRepos, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
-import { Box, Grid, Typography, Badge, Paper, CircularProgress } from '@material-ui/core';
+import { Box, Grid, Typography, Badge, Paper, CircularProgress, withStyles, WithStyles } from '@material-ui/core';
 import SelectedRepo from './SelectedRepo'
 import Issues from './Issues'
+import { compose } from 'redux';
 
 interface IProps {
   repos: IRepos[];
@@ -18,7 +19,7 @@ interface IState {
 }
 
 
-class _App extends React.Component<IProps, IState> {
+class _App extends React.Component<IProps, IState, WithStyles> {
   state = {
     selectedRepo: 0,
   }
@@ -104,11 +105,17 @@ class _App extends React.Component<IProps, IState> {
   }
 }
 
+const styles = ({}) => ({
+
+})
+
 const mapStateToProps = (state: IStoreState): { repos: IRepos[], loadingRepos: string } => {
   return { repos: state.reposReducer.repos, loadingRepos: state.reposReducer.loadingRepos }
 };
 
-export const App = connect(
-  mapStateToProps, 
-  { fetchRepos, setRepo }
-)(_App)
+export const App = compose(
+    withStyles(styles),
+    connect(
+      mapStateToProps, 
+      { fetchRepos, setRepo }),
+  )(_App) as any;
