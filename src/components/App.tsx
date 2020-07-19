@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { IRepos, fetchRepos, setRepo } from '../actions';
 import { IStoreState } from '../reducers';
@@ -8,7 +8,7 @@ import Issues from './Issues'
 import { compose } from 'redux';
 
 interface IProps {
-  repos: IRepos[];
+  repos: Array<IRepos>;
   fetchRepos: Function;
   setRepo: Function;
   loadingRepos: string;
@@ -19,7 +19,7 @@ interface IState {
   selectedRepo: number;
 }
 
-class _App extends React.Component<IProps, IState, WithStyles> {
+class _App extends Component<IProps, IState, WithStyles> {
   state = {
     selectedRepo: 0,
   }

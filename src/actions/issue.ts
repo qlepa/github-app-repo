@@ -15,7 +15,7 @@ export interface IIssue {
   user: {
     login: string;
   }
-  labels: ILabels[];
+  labels: Array<ILabels>;
 }
 
 export interface IFetchIssueAction {

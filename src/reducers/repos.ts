@@ -1,7 +1,7 @@
 import { IRepos, Action, ActionTypes } from '../actions';
 
 interface IReducerState {
-  repos: IRepos[],
+  repos: Array<IRepos>,
   selectedRepo: number,
   loadingRepos: string;
 }

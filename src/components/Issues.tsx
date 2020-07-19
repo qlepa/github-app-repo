@@ -9,7 +9,7 @@ import { IStoreState } from '../reducers';
 const selectSelectedRepo = (state: IStoreState) => state.reposReducer.selectedRepo;
 const selectRepos = (state: IStoreState) => state.reposReducer.repos;
 
-type IProps = {}
+interface IProps {}
 
 const useStyles = makeStyles(() => ({
   btnRandom: {
