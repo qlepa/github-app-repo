@@ -19,13 +19,15 @@ interface IState {
   selectedRepo: number;
 }
 
+// Choose class component to show skill on class based components ;)
 class _App extends Component<IProps, IState, WithStyles> {
   state = {
     selectedRepo: 0,
   }
+
   componentDidMount() {
     this.props.fetchRepos()
-  };
+  }
 
   chooseRepo = (selectedRepo: number ): void => {
     this.props.setRepo(selectedRepo);
@@ -64,12 +66,13 @@ class _App extends Component<IProps, IState, WithStyles> {
         return <CircularProgress disableShrink />
     }
   }
+
   render() {
     const { classes } = this.props;
 
     return (
-      <Box className={classes.wrapper}>
-        <Grid container direction='column'>
+      <Grid container direction='column' className={classes.wrapper}>
+        <Grid item>
           <Grid container justify='space-around'>
             <Grid item md={6}>
               <Typography variant='h1'>Welcome to Friday Issue Randomizer</Typography>
@@ -84,25 +87,25 @@ class _App extends Component<IProps, IState, WithStyles> {
               <Typography className={classes.detailsContent}>2. Random issue or add new one</Typography>
             </Grid>
           </Grid>
-          <Grid className={classes.reposList} container direction='column' alignItems='center' spacing={4}>
-            <Grid item>
-              <Grid container>
-                {this.renderReposList()}
-              </Grid>
-            </Grid>
-          </Grid>
+        </Grid>
+        <Grid className={classes.reposList} container direction='column' alignItems='center' spacing={4}>
           <Grid item>
-            <Grid className={classes.issueWrapper} container alignItems='center' justify='space-around'>
-              <Grid item md={6}>
-                <SelectedRepo />
-              </Grid>
-              <Grid className={classes.issueDetailsWrapper} item>
-                <Issues />
-              </Grid>
+            <Grid container>
+              {this.renderReposList()}
             </Grid>
           </Grid>
         </Grid>
-      </Box>
+        <Grid item>
+          <Grid className={classes.issueWrapper} container alignItems='center' justify='space-around'>
+            <Grid item md={6}>
+              <SelectedRepo />
+            </Grid>
+            <Grid className={classes.issueDetailsWrapper} item>
+              <Issues />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
     )
   }
 }
